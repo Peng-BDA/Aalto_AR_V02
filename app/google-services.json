@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "95013473671",
+    "firebase_url": "https://swift-adviser-421316-default-rtdb.firebaseio.com",
+    "project_id": "swift-adviser-421316",
+    "storage_bucket": "swift-adviser-421316.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95013473671:android:a4d7dccfee9b352e135722",
+        "android_client_info": {
+          "package_name": "com.example.myapplicationaaltov02"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF5DBPGxJ_95V5aDWHT2a5RoBTJksx3Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95013473671:android:0fa0b7a4b9c9cabc135722",
+        "android_client_info": {
+          "package_name": "com.google.ar.core.codelab.cloudanchor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF5DBPGxJ_95V5aDWHT2a5RoBTJksx3Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

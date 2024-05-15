@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application Aalto V02</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Task List</string>
+    <string name="title_notifications">User Profile</string>
+    <string name="element_text">Task 001</string>
+</resources>
