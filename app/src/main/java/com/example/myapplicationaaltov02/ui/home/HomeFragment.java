@@ -24,8 +24,21 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textTaskNumberView = binding.textTaskNumber;
+        homeViewModel.getTaskNumberText().observe(getViewLifecycleOwner(), textTaskNumberView::setText);
+        final TextView textUserView = binding.textUser;
+        homeViewModel.getUserText().observe(getViewLifecycleOwner(), textUserView::setText);
+        final TextView textOriginView = binding.textOrigin;
+        homeViewModel.getOriginText().observe(getViewLifecycleOwner(), textOriginView::setText);
+        final TextView textTargetView = binding.textTarget;
+        homeViewModel.getTargetText().observe(getViewLifecycleOwner(), textTargetView::setText);
+        final TextView textShipmentView = binding.textShipment;
+        homeViewModel.getShipmentText().observe(getViewLifecycleOwner(), textShipmentView::setText);
+        final TextView textEquipmentView = binding.textEquipment;
+        homeViewModel.getEquipmentText().observe(getViewLifecycleOwner(), textEquipmentView::setText);
+        final TextView textEstimatedTimeView = binding.textEstimatedTime;
+        homeViewModel.getEstimatedTimeText().observe(getViewLifecycleOwner(), textEstimatedTimeView::setText);
+
         return root;
     }
 
