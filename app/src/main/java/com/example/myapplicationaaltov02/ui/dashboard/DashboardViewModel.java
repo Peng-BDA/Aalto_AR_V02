@@ -47,11 +47,8 @@ public class DashboardViewModel extends ViewModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                for (DataSnapshot snapshot : dataSnapshot.child("Current Task").getChildren()) {
-                    String currentTaskName = snapshot.child("Task").getValue(String.class);
-                    currentTaskText.setValue(currentTaskName);
-                    break; // Assuming there's only one current task
-                }
+                String currentTaskName = dataSnapshot.child("Current Task").child("Task").getValue(String.class);
+                currentTaskText.setValue(currentTaskName);
 
                 Iterator<DataSnapshot> incomingTaskIterator = dataSnapshot.child("Incoming Task").getChildren().iterator();
                 incomingTaskText1.setValue(incomingTaskIterator.next().child("Task").getValue(String.class));

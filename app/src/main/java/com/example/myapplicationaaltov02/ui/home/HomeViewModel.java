@@ -44,17 +44,21 @@ public class HomeViewModel extends ViewModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    taskNumberText.setValue("Task:" + snapshot.child("Task").getValue(String.class));
-                    userText.setValue("Users: " + snapshot.child("Users").getValue(String.class));
-                    originText.setValue("Origin: " + snapshot.child("Origin").getValue(String.class));
-                    targetText.setValue("Target: " + snapshot.child("Target").getValue(String.class));
-                    shipmentText.setValue("Shipment: " + snapshot.child("Shipment").getValue(String.class));
-                    equipmentText.setValue("Equipment: " + snapshot.child("Equipment").getValue(String.class));
-                    estimatedTimeText.setValue("Estimated Time: " + snapshot.child("Estimated Time").getValue(String.class));
+                String taskNumber = dataSnapshot.child("Task").getValue(String.class);
+                String user = dataSnapshot.child("Users").getValue(String.class);
+                String origin = dataSnapshot.child("Origin").getValue(String.class);
+                String target = dataSnapshot.child("Target").getValue(String.class);
+                String shipment = dataSnapshot.child("Shipment").getValue(String.class);
+                String equipment = dataSnapshot.child("Equipment").getValue(String.class);
+                String estimatedTime = dataSnapshot.child("Estimated Time").getValue(String.class);
 
-                    break; // Assuming there's only one current task
-                }
+                taskNumberText.setValue("Task:" + taskNumber);
+                    userText.setValue("Users: " + user);
+                    originText.setValue("Origin: " + origin);
+                    targetText.setValue("Target: " + target);
+                    shipmentText.setValue("Shipment: " + shipment);
+                    equipmentText.setValue("Equipment: " + equipment);
+                    estimatedTimeText.setValue("Estimated Time: " +estimatedTime);
             }
 
             @Override
