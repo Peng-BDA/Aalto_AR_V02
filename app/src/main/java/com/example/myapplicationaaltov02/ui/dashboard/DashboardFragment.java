@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
@@ -32,24 +37,22 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Need to refactor
         final TextView currentTasktextView = binding.textCurrentTaskContent;
         dashboardViewModel.getCurrentTaskText().observe(getViewLifecycleOwner(), currentTasktextView::setText);
 
-        final TextView incomingTaskTextView1 = binding.textIncomingTaskContent1;
-        dashboardViewModel.getIncomingTaskText1().observe(getViewLifecycleOwner(), incomingTaskTextView1::setText);
-        final TextView incomingTaskTextView2 = binding.textIncomingTaskContent2;
-        dashboardViewModel.getIncomingTaskText2().observe(getViewLifecycleOwner(), incomingTaskTextView2::setText);
-        final TextView incomingTaskTextView3 = binding.textIncomingTaskContent3;
-        dashboardViewModel.getIncomingTaskText3().observe(getViewLifecycleOwner(), incomingTaskTextView3::setText);
-        final TextView incomingTaskTextView4 = binding.textIncomingTaskContent4;
-        dashboardViewModel.getIncomingTaskText4().observe(getViewLifecycleOwner(), incomingTaskTextView4::setText);
-        final TextView incomingTaskTextView5 = binding.textIncomingTaskContent5;
-        dashboardViewModel.getIncomingTaskText5().observe(getViewLifecycleOwner(), incomingTaskTextView5::setText);
+        // Update incoming task list
+        ListView incomingTaskListView = binding.listIncomingTask;
+        ArrayList<String> incomingTaskList = dashboardViewModel.getIncomingTaskList();
+        ArrayAdapter<String> incomingTaskAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, incomingTaskList);
+        incomingTaskListView.setAdapter(incomingTaskAdapter);
 
-        final TextView previousTaskTextView1 = binding.textPreviousTaskContent1;
-        dashboardViewModel.getPreviousTaskText1().observe(getViewLifecycleOwner(), previousTaskTextView1::setText);
-        final TextView previousTaskTextView2 = binding.textPreviousTaskContent2;
-        dashboardViewModel.getPreviousTaskText2().observe(getViewLifecycleOwner(), previousTaskTextView2::setText);
+        // Update previous task list
+        ListView previousTaskListView = binding.listPreviousTask;
+        ArrayList<String> previousTaskList = dashboardViewModel.getPreviousTaskList();
+        ArrayAdapter<String> previousTaskAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, previousTaskList);
+        previousTaskListView.setAdapter(previousTaskAdapter);
+        Log.d(TAG, "Elliot1");
 
         return root;
     }

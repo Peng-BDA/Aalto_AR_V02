@@ -15,8 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplicationaaltov02.MainActivity;
 import com.example.myapplicationaaltov02.databinding.FragmentHomeBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,6 +44,7 @@ public class HomeFragment extends Fragment {
         final Button startButton = binding.startButton;
         final Button finishButton = binding.finishButton;
         final Button emergencyButton = binding.emergencyButton;
+        final Button nextButton = binding.nextButton;
         final TextView timerView = binding.textTimer;
 
         final TextView textTaskNumberView = binding.textTaskNumber;
@@ -58,8 +62,6 @@ public class HomeFragment extends Fragment {
         final TextView textEstimatedTimeView = binding.textEstimatedTime;
         homeViewModel.getEstimatedTimeText().observe(getViewLifecycleOwner(), textEstimatedTimeView::setText);
 
-        // timerTextView = findViewById(R.id.timerTextView);
-
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 stopTimer();
+                // updateDatabase();
             }
         });
 
@@ -80,6 +83,15 @@ public class HomeFragment extends Fragment {
                 stopTimer();
             }
         });
+
+        /*
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDatabase();
+            }
+        });
+         */
         return root;
     }
 
@@ -129,5 +141,7 @@ public class HomeFragment extends Fragment {
             // Toast.makeText(MainActivity.this, "Timer is not running", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 }

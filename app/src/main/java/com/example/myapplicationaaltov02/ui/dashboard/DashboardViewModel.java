@@ -15,32 +15,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DashboardViewModel extends ViewModel {
-
+    private final ArrayList<String> incomingTaskList;
+    private final ArrayList<String> previousTaskList;
     private final MutableLiveData<String> currentTaskText;
-    private final MutableLiveData<String> incomingTaskText1;
-    private final MutableLiveData<String> incomingTaskText2;
-    private final MutableLiveData<String> incomingTaskText3;
-    private final MutableLiveData<String> incomingTaskText4;
-    private final MutableLiveData<String> incomingTaskText5;
-    private final MutableLiveData<String> previousTaskText1;
-    private final MutableLiveData<String> previousTaskText2;
 
     public DashboardViewModel() {
+        incomingTaskList = new ArrayList<>();
+        previousTaskList = new ArrayList<>();
+
         currentTaskText = new MutableLiveData<>();
-        incomingTaskText1 = new MutableLiveData<>();
-        incomingTaskText2 = new MutableLiveData<>();
-        incomingTaskText3 = new MutableLiveData<>();
-        incomingTaskText4 = new MutableLiveData<>();
-        incomingTaskText5 = new MutableLiveData<>();
-        previousTaskText1 = new MutableLiveData<>();
-        previousTaskText2 = new MutableLiveData<>();
+
 
         // Read from the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
+        Log.d(TAG, "Elliot2");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -50,16 +43,19 @@ public class DashboardViewModel extends ViewModel {
                 String currentTaskName = dataSnapshot.child("Current Task").child("Task").getValue(String.class);
                 currentTaskText.setValue(currentTaskName);
 
-                Iterator<DataSnapshot> incomingTaskIterator = dataSnapshot.child("Incoming Task").getChildren().iterator();
-                incomingTaskText1.setValue(incomingTaskIterator.next().child("Task").getValue(String.class));
-                incomingTaskText2.setValue(incomingTaskIterator.next().child("Task").getValue(String.class));
-                incomingTaskText3.setValue(incomingTaskIterator.next().child("Task").getValue(String.class));
-                incomingTaskText4.setValue(incomingTaskIterator.next().child("Task").getValue(String.class));
-                incomingTaskText5.setValue(incomingTaskIterator.next().child("Task").getValue(String.class));
+                incomingTaskList.clear();
+                previousTaskList.clear();
 
-                Iterator<DataSnapshot> PreviousTaskIterator = dataSnapshot.child("Previous Task").getChildren().iterator();
-                previousTaskText1.setValue(PreviousTaskIterator.next().child("Task").getValue(String.class));
-                previousTaskText2.setValue(PreviousTaskIterator.next().child("Task").getValue(String.class));
+                for (DataSnapshot snapshot : dataSnapshot.child("Incoming Task").getChildren()) {
+                    String task = snapshot.child("Task").getValue(String.class);
+                    incomingTaskList.add(task);
+                }
+                Log.d(TAG, "Elliot3");
+
+                for (DataSnapshot snapshot : dataSnapshot.child("Previous Task").getChildren()) {
+                    String task = snapshot.child("Task").getValue(String.class);
+                    previousTaskList.add(task);
+                }
             }
 
             @Override
@@ -70,28 +66,14 @@ public class DashboardViewModel extends ViewModel {
         });
     }
 
+        public ArrayList<String> getIncomingTaskList () {
+            return incomingTaskList;
+        }
+        public ArrayList<String> getPreviousTaskList () {
+            return previousTaskList;
+        }
         public LiveData<String> getCurrentTaskText () {
-            return currentTaskText;
-        }
-        public LiveData<String> getIncomingTaskText1 () {
-            return incomingTaskText1;
-        }
-        public LiveData<String> getIncomingTaskText2 () {
-            return incomingTaskText2;
-        }
-        public LiveData<String> getIncomingTaskText3 () {
-            return incomingTaskText3;
-        }
-        public LiveData<String> getIncomingTaskText4 () {
-            return incomingTaskText4;
-        }
-        public LiveData<String> getIncomingTaskText5 () {
-            return incomingTaskText5;
-        }
-        public LiveData<String> getPreviousTaskText1 () {
-            return previousTaskText1;
-        }
-        public LiveData<String> getPreviousTaskText2 () {
-            return previousTaskText2;
-        }
+                return currentTaskText;
+            }
+
     }

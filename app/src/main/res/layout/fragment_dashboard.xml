@@ -48,106 +48,44 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_incomingTaskContent1"
+        android:id="@+id/text_previousTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous Task"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.549" />
+
+    <ListView
+        android:id="@+id/list_incomingTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@+id/text_incomingTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/text_incomingTaskContent2"
+    <ListView
+        android:id="@+id/list_previousTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_incomingTaskContent1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_incomingTaskContent3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_incomingTaskContent2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_incomingTaskContent4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_incomingTaskContent3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_incomingTaskContent5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_incomingTaskContent4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_previousTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Previous Task "
-        android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_incomingTaskContent5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_previousTaskContent1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/text_previousTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/text_previousTaskContent2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Incoming Task "
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_previousTaskContent1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
