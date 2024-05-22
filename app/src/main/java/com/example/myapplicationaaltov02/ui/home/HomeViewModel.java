@@ -25,6 +25,7 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<String> shipmentText;
     private final MutableLiveData<String> equipmentText;
     private final MutableLiveData<String> estimatedTimeText;
+    private final MutableLiveData<String> stateText;
 
     public HomeViewModel() {
         taskNumberText = new MutableLiveData<>();
@@ -34,6 +35,7 @@ public class HomeViewModel extends ViewModel {
         shipmentText = new MutableLiveData<>();
         equipmentText = new MutableLiveData<>();
         estimatedTimeText = new MutableLiveData<>();
+        stateText = new MutableLiveData<>();
 
         // Read from the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -51,14 +53,16 @@ public class HomeViewModel extends ViewModel {
                 String shipment = dataSnapshot.child("Shipment").getValue(String.class);
                 String equipment = dataSnapshot.child("Equipment").getValue(String.class);
                 String estimatedTime = dataSnapshot.child("Estimated Time").getValue(String.class);
+                String state = dataSnapshot.child("State").getValue(String.class);
 
                 taskNumberText.setValue("Task:" + taskNumber);
-                    userText.setValue("Users: " + user);
-                    originText.setValue("Origin: " + origin);
-                    targetText.setValue("Target: " + target);
-                    shipmentText.setValue("Shipment: " + shipment);
-                    equipmentText.setValue("Equipment: " + equipment);
-                    estimatedTimeText.setValue("Estimated Time: " +estimatedTime);
+                userText.setValue("Users: " + user);
+                originText.setValue("Origin: " + origin);
+                targetText.setValue("Target: " + target);
+                shipmentText.setValue("Shipment: " + shipment);
+                equipmentText.setValue("Equipment: " + equipment);
+                estimatedTimeText.setValue("Estimated Time: " + estimatedTime);
+                stateText.setValue("State: " + state);
             }
 
             @Override
@@ -89,6 +93,9 @@ public class HomeViewModel extends ViewModel {
     }
     public LiveData<String> getEstimatedTimeText() {
         return estimatedTimeText;
+    }
+    public LiveData<String> getStateText() {
+        return stateText;
     }
 
 }

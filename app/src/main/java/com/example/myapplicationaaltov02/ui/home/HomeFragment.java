@@ -1,5 +1,7 @@
 package com.example.myapplicationaaltov02.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplicationaaltov02.MainActivity;
 import com.example.myapplicationaaltov02.databinding.FragmentHomeBinding;
+import com.example.myapplicationaaltov02.ui.Constants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,13 +28,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
     private boolean isTimerRunning;
     private long startTime;
     private Timer timer;
     private int executionTime;
-
+    private String time;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +46,6 @@ public class HomeFragment extends Fragment {
         final Button startButton = binding.startButton;
         final Button finishButton = binding.finishButton;
         final Button emergencyButton = binding.emergencyButton;
-        final Button nextButton = binding.nextButton;
         final TextView timerView = binding.textTimer;
 
         final TextView textTaskNumberView = binding.textTaskNumber;
@@ -61,6 +62,21 @@ public class HomeFragment extends Fragment {
         homeViewModel.getEquipmentText().observe(getViewLifecycleOwner(), textEquipmentView::setText);
         final TextView textEstimatedTimeView = binding.textEstimatedTime;
         homeViewModel.getEstimatedTimeText().observe(getViewLifecycleOwner(), textEstimatedTimeView::setText);
+        final TextView textStateView = binding.textState;
+        homeViewModel.getStateText().observe(getViewLifecycleOwner(), textStateView::setText);
+
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setPositiveButton(Constants.NEXT, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                updateDatabase();
+            }
+        });
+        builder.setNegativeButton(Constants.CANCEL, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancels the dialog.
+            }
+        });
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +89,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 stopTimer();
-                // updateDatabase();
+                showAlert(builder, homeViewModel.getEstimatedTimeText().getValue(), time, false);
             }
         });
 
@@ -81,17 +97,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 stopTimer();
+                showAlert(builder, homeViewModel.getEstimatedTimeText().getValue(), time, true);
             }
         });
 
-        /*
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateDatabase();
-            }
-        });
-         */
         return root;
     }
 
@@ -135,13 +144,56 @@ public class HomeFragment extends Fragment {
 
             int minutes = executionTime / 60;
             int seconds = executionTime % 60;
-            final String time = String.valueOf(minutes) + " min " + String.valueOf(seconds) + " s";
+            time = String.valueOf(minutes) + " min " + String.valueOf(seconds) + " s";
             myRef.child("Actual Finishing Time").setValue(time);
         } else {
             // Toast.makeText(MainActivity.this, "Timer is not running", Toast.LENGTH_SHORT).show();
         }
     }
 
+    // Need to refactor
+    private void updateDatabase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+        DatabaseReference task = database.getReference();
+        DatabaseReference currentTask = database.getReference("Current Task");
+        DatabaseReference previousTask = database.getReference("Previous Task");
+        DatabaseReference incomingTask = database.getReference("Incoming Task");
 
+        task.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                previousTask.push().setValue(dataSnapshot.child("Current Task").getValue());
+                currentTask.setValue(dataSnapshot.child("Incoming Task").getChildren().iterator().next().getValue());
+                dataSnapshot.child("Incoming Task").getChildren().iterator().next().getRef().removeValue();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
+    // Check consecutive alerts won't overlap
+    private void showAlert(AlertDialog.Builder builder, String estimatedTime, String actualTime, boolean isEmergency) {
+        String alertMessage;
+        if (isEmergency) {
+            alertMessage = "Current task stopped!";
+        }
+        else {
+            alertMessage = estimatedTime + "\nActual Completion Time: " + actualTime;
+        }
+        builder.setMessage(alertMessage);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
+
+
+
+
+
+
+
+
+
